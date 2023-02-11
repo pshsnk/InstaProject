@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.example.instaprjct;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Demo1ApplicationTests {
+class InstaprjctApplicationTests {
 
     @Test
     void contextLoads() {
