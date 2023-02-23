@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import javax.persistence.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;

@@ -3,7 +3,8 @@ package com.example.instaprjct.entity;
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Data
