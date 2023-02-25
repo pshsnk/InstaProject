@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     public static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
-    public final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired

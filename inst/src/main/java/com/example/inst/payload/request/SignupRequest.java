@@ -13,20 +13,20 @@ import javax.validation.constraints.Size;
 @Data
 @PasswordMatches
 public class SignupRequest {
-    @Email(message = "Should have a email format")
-    @NotBlank(message = "Email is required")
+
+    @Email(message = "It should have email format")
+    @NotBlank(message = "User email is required")
     @ValidEmail
     private String email;
-    @NotEmpty(message = "Not empty")
+    @NotEmpty(message = "Please enter your name")
     private String firstname;
-    @NotEmpty(message = "Not empty")
+    @NotEmpty(message = "Please enter your lastname")
     private String lastname;
-    @NotEmpty(message = "Not empty")
+    @NotEmpty(message = "Please enter your username")
     private String username;
-    @NotEmpty(message = "Not empty")
-    @Size( min = 6)
+    @NotEmpty(message = "Password is required")
+    @Size(min = 6)
     private String password;
-    @NotEmpty(message = "Not empty")
     private String confirmPassword;
 
 
