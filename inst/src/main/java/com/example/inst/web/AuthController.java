@@ -1,9 +1,9 @@
 package com.example.inst.web;
 
-import com.example.inst.payload.request.LoginRequest;
-import com.example.inst.payload.request.SignupRequest;
 import com.example.inst.payload.response.JWTTokenSuccessResponse;
 import com.example.inst.payload.response.MessageResponse;
+import com.example.inst.payload.request.LoginRequest;
+import com.example.inst.payload.request.SignupRequest;
 import com.example.inst.security.JWTTokenProvider;
 import com.example.inst.security.SecurityConstants;
 import com.example.inst.services.UserService;
@@ -26,38 +26,39 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 @PreAuthorize("permitAll()")
 public class AuthController {
+
     @Autowired
-    private ResponseErrorValidation responseErrorValidator;
-    @Autowired
-    private UserService userService;
+    private JWTTokenProvider jwtTokenProvider;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private JWTTokenProvider jwtTokenProvider;
-
+    private ResponseErrorValidation responseErrorValidation;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult){
-        ResponseEntity<Object> errors = responseErrorValidator.mapValidationService(bindingResult);
-        if(!ObjectUtils.isEmpty(errors)) return errors;
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), loginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
 
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
 
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult){
-    ResponseEntity<Object> errors = responseErrorValidator.mapValidationService(bindingResult);
-        if(!ObjectUtils.isEmpty(errors)) return errors;
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
 
         userService.createUser(signupRequest);
-        return ResponseEntity.ok(new MessageResponse("User registered!"));
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-
-
 
 }
