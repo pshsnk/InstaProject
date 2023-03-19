@@ -34,7 +34,7 @@ public class CommentService {
     }
 
 
-    public Comment savComment(Long postId, CommentDTO commentDTO, Principal principal){
+    public Comment saveComment(Long postId, CommentDTO commentDTO, Principal principal){
         User user = getUserByPrincipal(principal);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("Post not found"));
